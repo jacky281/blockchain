@@ -9,7 +9,7 @@ export PATH=/home/formssi/fabric-samples/bin:$PATH
 1. cd /home/formssi/fabric-samples/first-network
 
 2. ./byfn.sh up
-![](https://github.com/janeleung0802/blockchain/blob/master/cli01.JPG)
+![](https://github.com/janeleung0802/blockchain/blob/master/cli01.jpg)
 
 
 ### To get into fabric-tool container and set up environment variables:
