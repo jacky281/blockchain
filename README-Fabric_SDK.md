@@ -11,13 +11,13 @@
 1.	Call EnrollUser_Org1 and EnrollUser_Org2 endpoint to register user, and update the corresponding token in the the variable tabs in the collection
 
 ```
-![alt text](https://github.com/janeleung0802/blockchain/blob/master/postman01.jpg)
+[[https://github.com/janeleung0802/blockchain/blob/master/postman01.jpg|alt=octocat]]
 
-![alt text](https://github.com/janeleung0802/blockchain/blob/master/postman02.jpg)
+[[https://github.com/janeleung0802/blockchain/blob/master/postman02.jpg|alt=octocat]]
 ```
 
 2.	Then call the following endpoints one by one:
 
 ```
-![alt text](https://github.com/janeleung0802/blockchain/blob/master/postman03.jpg)
+[[https://github.com/janeleung0802/blockchain/blob/master/postman03.jpg|alt=octocat]]
 ```
