@@ -2,8 +2,13 @@
 
 ### Start the balance-transfer app:
 
-1. cd /home/formssi/fabric-samples/balance-transfer
-2. ./runApp.sh
+```
+cd /home/formssi/fabric-samples/balance-transfer
+```
+
+```
+./runApp.sh
+```
 
 
 ### Start Postman and go into balance-transfer collection:
