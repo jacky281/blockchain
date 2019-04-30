@@ -12,6 +12,11 @@ export PATH=/home/formssi/fabric-samples/bin:$PATH
 cd /home/formssi/fabric-samples/first-network
 ```
 
+Please stop any existing fabric network before you start a new network by using the following command:
+```
+./byfn.sh down
+```
+Spin up the network
 ```
 ./byfn.sh up
 ```
@@ -35,6 +40,13 @@ source ./scripts/setGlobalVariables.sh
 source ./scripts/changeToOrg1Peer0.sh
 ```
 
+You may use the following command to trace you acting as which peer
+```
+env
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli11.JPG)
+
+
 ```
 peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
 ```
@@ -47,6 +59,11 @@ peer channel create -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-ar
 peer channel join -b $CHANNEL_NAME.block
 ```
 ![](https://github.com/janeleung0802/blockchain/blob/master/cli04.JPG)
+
+```
+peer channel list
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli12.JPG)
 
 ### Join Org1Peer1 into the Channel:
 
@@ -89,6 +106,10 @@ peer chaincode install -n mycc -v 1.0 -l golang -p github.com/chaincode/chaincod
 ```
 ![](https://github.com/janeleung0802/blockchain/blob/master/cli05.JPG)
 
+```
+peer chaincode list --installed
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli13.JPG)
 
 ### Install Chaincode at Org1Peer1:
 
@@ -96,7 +117,8 @@ peer chaincode install -n mycc -v 1.0 -l golang -p github.com/chaincode/chaincod
 source ./scripts/changeToOrg1Peer1.sh
 ```
 
-```peer chaincode install -n mycc -v 1.0 -l golang -p github.com/chaincode/chaincode_example02/go/
+```
+peer chaincode install -n mycc -v 1.0 -l golang -p github.com/chaincode/chaincode_example02/go/
 ```
 
 ### Install Chaincode at Org2Peer0:
@@ -119,6 +141,8 @@ source ./scripts/changeToOrg2Peer1.sh
 peer chaincode install -n mycc -v 1.0 -l golang -p github.com/chaincode/chaincode_example02/go/
 ```
 
+"github.com/chaincode/chaincode_example02/go/" is a relative path
+
 ### Instantiate Chaincode at Org1Peer0:
 
 ```
@@ -128,6 +152,17 @@ source ./scripts/changeToOrg1Peer0.sh
 ```
 peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l golang -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"
 ```
+-o orderer.example.com:7050: orderer address
+--tls: enable tls
+-n mycc: chaincode name
+-l golang: language using
+-v 1.0: chaincode version
+-P "AND ('Org1MSP.peer','Org2MSP.peer')": endorsement policy
+
+note: 
+* instantiate will create a docker container which may consume more time
+* you just need to instantiate chaincode once, other chaincode container will be generated on the fly when needed
+(Tips: invoke query during deployment)
 
 ### Query Chaincode at Org1Peer0:
 
