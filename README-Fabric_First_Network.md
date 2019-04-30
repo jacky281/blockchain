@@ -152,12 +152,12 @@ source ./scripts/changeToOrg1Peer0.sh
 ```
 peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l golang -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "AND ('Org1MSP.peer','Org2MSP.peer')"
 ```
--o orderer.example.com:7050: orderer address
---tls: enable tls
--n mycc: chaincode name
--l golang: language using
--v 1.0: chaincode version
--P "AND ('Org1MSP.peer','Org2MSP.peer')": endorsement policy
+-o orderer.example.com:7050: orderer address<br />
+--tls: enable tls<br />
+-n mycc: chaincode name<br />
+-l golang: language using<br />
+-v 1.0: chaincode version<br />
+-P "AND ('Org1MSP.peer','Org2MSP.peer')": endorsement policy<br />
 
 note: 
 * instantiate will create a docker container which may consume more time
@@ -229,6 +229,8 @@ peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED -
 ```
 ![](https://github.com/janeleung0802/blockchain/blob/master/cli08.JPG)
 
+--peerAddresses: indicate which peer will be used for endorsement
+
 ### Check the result by Query Chaincode at Org2Peer1:
 
 ```
@@ -244,3 +246,51 @@ peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}'
 peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","b"]}'
 ```
 ![](https://github.com/janeleung0802/blockchain/blob/master/cli10.JPG)
+
+### Try to Invoke Chaincode with only one peerAddress at Org1Peer0:
+
+```
+source ./scripts/changeToOrg1Peer0.sh
+```
+
+```
+peer chaincode invoke -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles $PEER0_ORG1_CA -c '{"Args":["invoke","a","b","10"]}'
+```
+
+```
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}'
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli09.JPG)
+
+```
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","b"]}'
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli10.JPG)
+
+Exit the cli tool:
+```
+exit
+```
+
+```
+docker ps
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli16.JPG)
+
+```
+docker logs e7c1a026b8e0
+```
+![](https://github.com/janeleung0802/blockchain/blob/master/cli14.JPG)
+
+
+recall: When we instantiate the chaincode we have specified that we need both peer of Org1 and Org2 for endorsement
+
+![](https://github.com/janeleung0802/blockchain/blob/master/cli15.JPG)
+
+
+
+
+
+
+
+
